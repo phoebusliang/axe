@@ -1,7 +1,7 @@
 import os
 from behave import *
 from selenium.webdriver import ActionChains
-import startkit.steps.basic_actions as bo
+import tests.python.steps.basic_actions as bo
 import requests
 import json
 
@@ -30,6 +30,11 @@ def input_user_info(context, user, psw):
 
 @step('Clear username and password')
 def clear_user_info(context):
+    context.route = context.url + "/elements"
+    body = {"type": ""}
+
+    res = bo.wait_for_element(context, "post", body, check=lambda data: "Email address" in data)
+
     response = requests.post(context.url + '/' + context.session + '/element/user_ele_id/clear')
     assert (response.status_code == 200)
 

@@ -1,9 +1,23 @@
 import time
-import startkit.steps.log as log
+import tests.python.steps.log as log
 import requests
 import os
 import datetime
 import calendar
+import json
+
+
+def wait_for_element(context, request_type, body, check=bool, timeout=30, error_template="Value is %s"):
+    start = time.time()
+    while time.time() - start < timeout:
+        if request_type == "post":
+            response = requests.post(context.route, data=json.dumps(body))
+        else:
+            response = requests.get(context.url)
+        response = json.loads(response.text)
+        if check(response):
+            return response
+    raise AssertionError(error_template % response)
 
 
 def wait_for_script(browser, script, check=bool, timeout=30, error_template="Value is %s"):
