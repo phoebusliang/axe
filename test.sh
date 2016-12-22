@@ -1,4 +1,4 @@
-newman run /Users/twe/Documents/workspace/xcode/demo/iosdemo7p.postman_collection.json -e /Users/twe/Documents/workspace/xcode/iosautomation/ios.postman_environment.json --reporter-html-export 7plus.html &
+newman run /Users/twe/Documents/workspace/xcode/demo/iosdemo7p.postman_collection.json -e /Users/twe/Documents/workspace/xcode/iosautomation/ios.postman_environment.json --reporter html 7plus.html &
 
 newman run /Users/twe/Documents/workspace/xcode/demo/iosdemo6sp.postman_collection.json -e /Users/twe/Documents/workspace/xcode/iosautomation/ios.postman_environment.json --reporter-html-export 6splus.html &
 

@@ -19,7 +19,19 @@ def launch_app(context, device):
     }
     payload = {"desiredCapabilities": {"bundleId": "com.thoughtworks.StartKit"}}
     response = requests.post(options.get(device), data=json.dumps(payload))
+    context.url = options.get(device)
     context.session = json.loads(response.text)['sessionId']
+
+
+@step('Input the username: "{user}" and password: "{psw}"')
+def input_user_info(context, user, psw):
+    user_playload = {}
+
+
+@step('Clear username and password')
+def clear_user_info(context):
+    response = requests.post(context.url + '/' + context.session + '/element/user_ele_id/clear')
+    assert (response.status_code == 200)
 
 
 @step('Click the "Detail Pane Collapser" and make it be "{expanded_or_collapsed}"')
