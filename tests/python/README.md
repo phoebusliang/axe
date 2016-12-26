@@ -1,27 +1,28 @@
 
-## Prerequisites
+# Prerequisites
 
 You will need the following things properly installed on your computer.
 
 ### Homebrew (Mac)
 
-* [Python](https://www.python.org/) (3.4) - `brew install python3`
-* ChromeDriver = `brew install chromedriver`
+* [Python](https://www.python.org/) (3.5) - `brew install python3`
+
 * NodeJS - `brew install nodejs`
 
-### Node packages
+### FBSimulatorControl and WebDriverAgent
 
-* `npm install -g mountebank`
+* Download the FBSimulatorControl(https://github.com/facebook/FBSimulatorControl) and WebDriverAgent (https://github.com/facebook/webdriveragent)
 
 ### Python / Prerequisites
 
 (Pip3 install: download and `python3 get-pip.py`(which may require administrator access) to install)
 
-* `pip3 install -r tests/webdriver/requirements.txt`
+* In `axe` folder: `pip3 install -r tests/python/requirements.txt`
 
-## Running WebDriver Tests with Python's "Behave" Framework
+# Running iOS Automation Tests with Python's "Behave" Framework
 
-You will need to install required Python package and download chrome driver at first.
+* sh *setup.sh*
 
-* Go to `pv_frontend/app` folder and start the production `npm start`(if you didn't do that)
-* Back to `pv_frontend` fold and execute command `python3 -m behave tests/webdriver --tags=complete --junit --format pretty -k --no-skipped --no-capture`
+* Go to `axe` folder and start the production `npm start`(if you didn't do that)
+
+* In `axe` folder and execute command `python3 -m behave tests/python --tags=complete --junit --format pretty -k --no-skipped --no-capture`

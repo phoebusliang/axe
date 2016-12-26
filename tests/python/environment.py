@@ -1,7 +1,7 @@
 import os
 import shutil
 from selenium import webdriver
-from startkit.steps.basic_actions import clean_env
+from tests.python.steps.basic_actions import clean_env
 import requests
 
 

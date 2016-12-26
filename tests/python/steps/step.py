@@ -1,4 +1,3 @@
-import os
 from behave import *
 from selenium.webdriver import ActionChains
 import tests.python.steps.basic_actions as bo
@@ -25,18 +24,47 @@ def launch_app(context, device):
 
 @step('Input the username: "{user}" and password: "{psw}"')
 def input_user_info(context, user, psw):
-    user_playload = {}
+    body_user = {'value': user}
+    context.route = context.url + '/' + context.session + '/element/' + context.user_id + '/value'
+    res = bo.wait_for_element(context, 'post', body_user, check=lambda data: context.user_id in data)
+
+    context.route = context.url + '/' + context.session + "/elements"
+    body_psw_field = {"using": "class name", "value": "XCUIElementTypeSecureTextField"}
+    res = bo.wait_for_element(context, 'post', body_psw_field,
+                              check=lambda data: 'XCUIElementTypeSecureTextField' in data)
+    context.psw_id = json.loads(res)['value'][0]['ELEMENT']
+
+    body_psw_val = {'value': psw}
+    context.route = context.url + '/' + context.session + '/element/' + json.loads(res)['value'][0][
+        'ELEMENT'] + '/value'
+    res = bo.wait_for_element(context, 'post', body_psw_val, check=lambda data: json.loads(res)['value'][0][
+                                                                                    'ELEMENT'] in data)
+
+
+@step('Tap "Login"')
+def input_user_info(context):
+    context.route = context.url + '/' + context.session + "/elements"
+    body_login_loc = {"using": "class name", "value": "XCUIElementTypeButton"}
+    res = bo.wait_for_element(context, 'post', body_login_loc, check=lambda data: 'Login' in data)
+
+    for item in json.loads(res)['value']:
+        if item['label'] == 'Login':
+            context.login = item['ELEMENT']
+            break
+    context.route = context.url + '/' + context.session + '/element/' + context.login + '/click'
+    bo.wait_for_element(context, 'post', check=lambda data: context.login in data)
 
 
 @step('Clear username and password')
 def clear_user_info(context):
-    context.route = context.url + "/elements"
-    body = {"type": ""}
-
-    res = bo.wait_for_element(context, "post", body, check=lambda data: "Email address" in data)
-
-    response = requests.post(context.url + '/' + context.session + '/element/user_ele_id/clear')
-    assert (response.status_code == 200)
+    context.route = context.url + '/' + context.session + "/elements"
+    body = {"using": "class name", "value": "XCUIElementTypeTextField"}
+    res = bo.wait_for_element(context, "post", body, check=lambda data: "XCUIElementTypeTextField" in data)
+    res_json = json.loads(res)
+    context.user_id = res_json['value'][0]['ELEMENT']
+    context.route = context.url + '/' + context.session + '/element/' + res_json['value'][0]['ELEMENT'] + '/clear'
+    response = bo.wait_for_element(context, "post", body, check=lambda data: res_json['value'][0]['ELEMENT'] in data)
+    assert (json.loads(response)['status'] == 0)
 
 
 @step('Click the "Detail Pane Collapser" and make it be "{expanded_or_collapsed}"')
