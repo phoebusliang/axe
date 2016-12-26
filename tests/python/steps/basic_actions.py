@@ -14,6 +14,8 @@ sleep_time = 2
 
 bundle_id = 'com.thoughtworks.StartKit'
 
+app_path = '/Users/twe/Downloads/com.thoughtworks.StartKit'
+
 command_path = '/Users/twe/Documents/fbsimctl/fbsimctl'
 
 
@@ -45,3 +47,29 @@ def clean_keychain(device):
     requests.get(
         command_path + ' ' + options.get(device) + ' clear_keychain ' + bundle_id)
     time.sleep(2)
+
+
+def install_app(device):
+    requests.get(
+        command_path + ' ' + options.get(device) + ' install ' + app_path)
+    time.sleep(2)
+
+
+def uninstall_app(device):
+    requests.get(
+        command_path + ' ' + options.get(device) + ' uninstall ' + bundle_id)
+    time.sleep(2)
+
+
+def clean_all_keychain():
+    requests.get(command_path + ' --state=booted clear_keychain ' + bundle_id)
+
+
+def clean_env(device):
+    clean_keychain(device)
+    uninstall_app(device)
+    install_app(device)
+
+
+def clean_all_env():
+    clean_all_keychain()

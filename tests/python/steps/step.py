@@ -67,17 +67,6 @@ def clear_user_info(context):
     assert (json.loads(response)['status'] == 0)
 
 
-@step('Click the "Detail Pane Collapser" and make it be "{expanded_or_collapsed}"')
-def click_the_collapser(context, expanded_or_collapsed):
-    context.browser.find_element_by_css_selector('.detail-pane-collapser').click()
-
-
-@step('"{enlarge_or_shrink}" the "Instrument Detail Pane" with {offset} pixel')
-def drag_instrument_detail_pane(context, enlarge_or_shrink, offset):
-    action_chain = ActionChains(context.browser)
-    dragger = bo.wait_for_script(context.browser, "return $('.detail-pane-dragger i')[0]",
-                                 check=lambda element: element)
-    action_chain.click_and_hold(dragger).move_by_offset(0, int(
-        offset)).release().perform() if enlarge_or_shrink == 'enlarge' else action_chain.click_and_hold(
-        dragger).move_by_offset(0, -int(offset)).release().perform()
-    action_chain.click_and_hold(dragger).click().move_by_offset(0, 200).click(dragger).release().perform()
+@step('Setup the environment for "{device}"')
+def setup_env(context, device):
+    bo.clean_env(device)
