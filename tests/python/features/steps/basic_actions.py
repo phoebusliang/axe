@@ -1,6 +1,6 @@
 import json
 import time
-
+import os
 import requests
 
 options = {
@@ -10,11 +10,11 @@ options = {
     "6p": "A915EE37-E942-43D7-8F67-B1ADDC743433"
 }
 
-sleep_time = 2
+sleep_time = 1
 
 bundle_id = 'com.thoughtworks.StartKit'
 
-app_path = '/Users/twe/Downloads/com.thoughtworks.StartKit'
+app_path = '/Users/twe/Downloads/StartKit.app'
 
 command_path = '/Users/twe/Documents/fbsimctl/fbsimctl'
 
@@ -44,25 +44,26 @@ def wait_for_script(browser, script, check=bool, timeout=30, error_template="Val
 
 
 def clean_keychain(device):
-    requests.get(
-        command_path + ' ' + options.get(device) + ' clear_keychain ' + bundle_id)
-    time.sleep(2)
+    # requests.get(command_path + ' ' + options.get(device) + ' clear_keychain ' + bundle_id)
+    os.system(command_path + ' ' + options.get(device) + ' clear_keychain ' + bundle_id)
+    time.sleep(sleep_time)
 
 
 def install_app(device):
-    requests.get(
-        command_path + ' ' + options.get(device) + ' install ' + app_path)
-    time.sleep(2)
+    # requests.get(command_path + ' ' + options.get(device) + ' install ' + app_path)
+    os.system(command_path + ' ' + options.get(device) + ' install ' + app_path)
+    time.sleep(sleep_time)
 
 
 def uninstall_app(device):
-    requests.get(
-        command_path + ' ' + options.get(device) + ' uninstall ' + bundle_id)
-    time.sleep(2)
+    # requests.get(command_path + ' ' + options.get(device) + ' uninstall ' + bundle_id)
+    os.system(command_path + ' ' + options.get(device) + ' uninstall ' + bundle_id)
+    time.sleep(sleep_time)
 
 
 def clean_all_keychain():
-    requests.get(command_path + ' --state=booted clear_keychain ' + bundle_id)
+    # requests.get(command_path + ' --state=booted clear_keychain ' + bundle_id)
+    os.system(command_path + ' --state=booted clear_keychain ' + bundle_id)
 
 
 def clean_env(device):

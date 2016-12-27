@@ -1,8 +1,10 @@
-from behave import *
-from selenium.webdriver import ActionChains
-import tests.python.steps.basic_actions as bo
-import requests
 import json
+
+import requests
+from behave import *
+
+# import tests.python.features.steps.basic_actions as bo
+import basic_actions as bo
 
 
 @given('Open the pv page with client: "{client}" Date: "{date}" and fund: "{fund}"')

@@ -7,8 +7,6 @@ You will need the following things properly installed on your computer.
 
 * [Python](https://www.python.org/) (3.5) - `brew install python3`
 
-* NodeJS - `brew install nodejs`
-
 ### FBSimulatorControl and WebDriverAgent
 
 * Download the FBSimulatorControl(https://github.com/facebook/FBSimulatorControl) and WebDriverAgent (https://github.com/facebook/webdriveragent)
@@ -21,8 +19,6 @@ You will need the following things properly installed on your computer.
 
 # Running iOS Automation Tests with Python's "Behave" Framework
 
-* sh *setup.sh*
+* sh *setup.sh* (You should modify uuid, bundle id or app_path for your own use)
 
-* Go to `axe` folder and start the production `npm start`(if you didn't do that)
-
-* In `axe` folder and execute command `python3 -m behave tests/python --tags=complete --junit --format pretty -k --no-skipped --no-capture`
+* Go to `axe` folder and execute command `behave tests/python/features --processes 2 --parallel-element scenario --tags=complete --junit --format pretty -k --no-skipped --no-capture` to run tests as parallel
