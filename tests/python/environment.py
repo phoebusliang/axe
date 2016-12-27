@@ -16,8 +16,8 @@ devices = {
 from lock import Lock
 
 
-def after_scenario(context, scenario, device):
-    lock = Lock("/tmp/" + devices.get(device))
+def after_scenario(context, scenario):
+    lock = Lock("/tmp/" + context.device)
     lock.release()
 
 # def after_step(context, step):

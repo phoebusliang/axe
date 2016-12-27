@@ -86,6 +86,7 @@ def clear_user_info(context):
 def setup_env(context, device):
     lock = Lock("/tmp/" + devices.get(device))
     lock.acquire()
+    context.device = devices.get(device)
     bo.clean_env(device)
 
 
