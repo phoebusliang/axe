@@ -10,6 +10,15 @@ from behave import *
 from config import *
 import basic_actions as bo
 
+from lock import Lock
+
+devices = {
+    "7p": "49066C3A-1BB3-440B-B660-C9AAF02B176A",
+    "6sp": "BC9D083F-111E-4022-A5BA-EF1BDB9B8AD0",
+    "6s": "92A7F012-0270-4C06-83F9-DEF643883CC8",
+    "6p": "A915EE37-E942-43D7-8F67-B1ADDC743433"
+}
+
 
 @given('Open the pv page with client: "{client}" Date: "{date}" and fund: "{fund}"')
 def open_pv_page(context, client, date, fund):
@@ -75,11 +84,8 @@ def clear_user_info(context):
 
 @step('Setup the environment for "{device}"')
 def setup_env(context, device):
-    start = time.time()
-    while time.time() - start < 600:
-        if get_7p():
-            break
-    set_7p(False)
+    lock = Lock("/tmp/" + devices.get(device))
+    lock.acquire()
     bo.clean_env(device)
 
 
