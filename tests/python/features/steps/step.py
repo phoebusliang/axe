@@ -1,9 +1,13 @@
 import json
 
 import requests
+import time
 from behave import *
 
 # import tests.python.features.steps.basic_actions as bo
+# import basic_actions as bo
+# import basic_actions as bo
+from config import *
 import basic_actions as bo
 
 
@@ -71,4 +75,24 @@ def clear_user_info(context):
 
 @step('Setup the environment for "{device}"')
 def setup_env(context, device):
+    start = time.time()
+    while time.time() - start < 600:
+        if get_7p():
+            break
+    set_7p(False)
     bo.clean_env(device)
+
+
+@step('Print test 1 global var')
+def print_var(context):
+    print('****** test 1: ' + str(get_7p()))
+
+
+@step('Print test 2 global var')
+def print_var(context):
+    print('****** test 2: ' + str(get_7p()))
+
+
+@step('Print log')
+def print_log(context):
+    assert 1 == 2
