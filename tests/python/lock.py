@@ -14,3 +14,9 @@ class Lock:
 
     def __del__(self):
         self.handle.close()
+
+
+lock_for_7p = Lock("/tmp/7p.lock")
+lock_for_6sp = Lock("/tmp/6sp.lock")
+
+locks = {"7p": lock_for_7p, "6sp": lock_for_6sp}

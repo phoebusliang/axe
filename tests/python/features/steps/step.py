@@ -1,4 +1,5 @@
 import json
+import os
 
 import requests
 import time
@@ -10,7 +11,7 @@ from behave import *
 from config import *
 import basic_actions as bo
 
-from lock import Lock
+from lock import Lock, locks
 
 devices = {
     "7p": "49066C3A-1BB3-440B-B660-C9AAF02B176A",
@@ -84,9 +85,11 @@ def clear_user_info(context):
 
 @step('Setup the environment for "{device}"')
 def setup_env(context, device):
-    lock = Lock("/tmp/" + devices.get(device))
-    lock.acquire()
-    context.device = devices.get(device)
+    # lock = Lock("/tmp/" + device + '.tmp')
+    # lock.acquire()
+    # locks.get(device).acquire()
+    # context.device = device
+    # print("XXXXXXX::" + str(os.getpid()))
     bo.clean_env(device)
 
 

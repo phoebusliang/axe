@@ -21,4 +21,4 @@ You will need the following things properly installed on your computer.
 
 * sh *setup.sh* (You should modify uuid, bundle id or app_path for your own use)
 
-* Go to `axe` folder and execute command `behave tests/python/features --processes 4 --parallel-element feature --tags=complete --junit --format pretty -k --no-skipped --no-capture` to run tests as parallel
+* Go to `axe/tests/python` folder and execute command `behave tests/python/features --processes 4 --parallel-element feature --tags=complete --junit --format pretty -k --no-skipped --no-capture` to run tests as parallel
