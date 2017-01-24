@@ -1,0 +1,5 @@
+#default: --format html --out report<%= ENV['TEST_ENV_NUMBER'] %>.html
+default: --format json --out report/report<%= ENV['TEST_ENV_NUMBER'] %>.json
+html_report: --format progress --format html --out=report/features_report.html
+#default: --profile chrome --format pretty
+#default: --profile chrome --format progress --format html --out=report/features_report.html
