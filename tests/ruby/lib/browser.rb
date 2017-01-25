@@ -57,6 +57,9 @@ class Browser
     response['value'].collect { |item| item['ELEMENT'] }
   end
 
-  
+  def tap(element_id)
+    request_route = @url+'/'+@session_id+'/element/'+element_id
+    wait_for_response(request_route, 'post', '', lambda { |val| return val.to_s.include? element_id })
+  end
 
 end
