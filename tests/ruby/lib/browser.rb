@@ -58,8 +58,31 @@ class Browser
   end
 
   def tap(element_id)
-    request_route = @url+'/'+@session_id+'/element/'+element_id
+    request_route = @url+'/session/'+@session_id+'/element/'+element_id+'/click'
     wait_for_response(request_route, 'post', '', lambda { |val| return val.to_s.include? element_id })
+  end
+
+  def type(element_id, val)
+    request_route_clear = @url+'/session/'+@session_id+'/element/'+element_id+'/clear'
+    wait_for_response(request_route_clear, 'post', '', lambda { |val| return val.to_s.include? element_id })
+
+    request_route_type = @url+'/session/'+@session_id+'/element/'+element_id+'/value'
+    body = {:value => val}
+    wait_for_response(request_route_type, 'post', body, lambda { |val| return val.to_s.include? element_id })
+  end
+
+  def scroll(name, element_id)
+    request_route = @url+'/session/'+@session_id+'/uiaElement/'+element_id+'/scroll'
+    body = {:name => name}
+    wait_for_response(request_route, 'post', body, lambda { |val| return val.to_s.include? @session_id })
+  end
+
+  def take_screenshot(to_file: './screenshot.png')
+    request_route = @url+'/screenshot'
+    response = wait_for_response(request_route, 'get', '', lambda { |val| return val.to_s.include? @session_id })
+    File.write to_file, Base64.decode64(response['value'])
+    response['output'] = to_file
+    response
   end
 
 end
